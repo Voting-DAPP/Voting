@@ -2,7 +2,9 @@ import React from 'react'
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <div>
+      <button> 투표 마무리 할껴 ? </button>
+    </div>
   )
 }
 

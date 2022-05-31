@@ -7,6 +7,7 @@ import { ethers } from "ethers"
 import {Img1, Img2, Img3, Img4, Img5, Img6} from './img'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -54,76 +55,77 @@ function Vote() {
 
 
   let voteList = [{
-    id: "서기영",
-    description: 'react,',
-    popular: 1,
-    img: Img1
-}, {
-    id: "서기일",
-    description: 'nodejs',
-    popular: 3,
-    img: Img2
-},{
-    id: "서기이",
-    description: 'javascript',
-    popular: 2,
-    img: Img3
-}];
+      id: "서기영",
+      description: 'react,',
+      popular: "후보0",
+      img: Img1
+  }, {
+      id: "서기일",
+      description: 'nodejs',
+      popular: "후보1",
+      img: Img2
+  },{
+      id: "서기이",
+      description: 'javascript',
+      popular: "후보2",
+      img: Img3
+  }];
 
-const [voteValue, setVoteValue] = useState(voteList);
-const [clickState, setClickState] = useState(false);
-const [addVoteId, setAddVoteId] = useState("");
-const [addVoteDe, setAddVoteDe] = useState("");
-const [addVoteP, setAddVoteP] = useState("");
+  const [voteValue, setVoteValue] = useState(voteList);
+  const [clickState, setClickState] = useState(false);
+  const [addVoteId, setAddVoteId] = useState("");
+  const [addVoteDe, setAddVoteDe] = useState("");
+  const [addVoteP, setAddVoteP] = useState("");
+  
+  const navigate = useNavigate()
 
-// 값을 저장하는 변수를 만들어야해.
-// let addVote2 = [];
 
-const voteClick = (vote) => {
-    console.log(vote)
-}
+  const voteClick = (vote) => {
+      console.log(vote)
+      navigate('/admin')
+  }
 
-const divCard = (vote, index) => {
+  const divCard = (vote, index) => {
 
-    return (
-        <div key={index}>
-        <CardGroup onClick={() => voteClick(vote)} >
-            <Card  className='Card'>
-                <Card.Img variant="top" src={vote.img} />
-                <Card.Body>
-                <Card.Title>{vote.id}</Card.Title>
-                <Card.Text>
-                    {vote.description}
-                </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                <small className="text-muted">{vote.popular}</small>
-                </Card.Footer>
-            </Card>
-        </CardGroup >
-        </div>
-    )
-}
+      return (
+          <div key={index}>
+          <CardGroup onClick={() => voteClick(vote)} >
+              <Card  className='Card'>
+                  <Card.Img variant="top" src={vote.img} />
+                  <Card.Body>
+                  <Card.Title>{vote.id}</Card.Title>
+                  <Card.Text>
+                      {vote.description}
+                  </Card.Text>
+                  </Card.Body>
+                  <Card.Footer>
+                  <small className="text-muted">{vote.popular}</small>
+                  </Card.Footer>
+              </Card>
+          </CardGroup >
+          </div>
+      )
+  }
 
-// 상태 바꿔주는 함수
-const click =() => {
-    if (!clickState) setClickState(!clickState)
-    else {
-        if(addVoteId == "" || addVoteDe == "" || addVoteP == ""){
-            alert("없다")
-        } else {
-            // array.concat(array1)
-            // array = [1,2], array1 = [2,3,4]
-            // [1,2,2,3,4];
-            // 배열과 배열을 함칠때 
-            setVoteValue(voteValue.concat([{id: addVoteId, description: addVoteDe, popular: addVoteP ,img : Img4}]));
-            setClickState(!clickState)
-            setAddVoteId("")
-            setAddVoteDe("")
-            setAddVoteP("")
-        }
-    }
-}
+  // 상태 바꿔주는 함수
+  const click =() => {
+      if (!clickState) setClickState(!clickState)
+      else {
+          if(addVoteId == "" || addVoteDe == "" || addVoteP == ""){
+              alert("없다")
+          } else {
+              // array.concat(array1)
+              // array = [1,2], array1 = [2,3,4]
+              // [1,2,2,3,4];
+              // 배열과 배열을 함칠때 
+              setVoteValue(voteValue.concat([{id: addVoteId, description: addVoteDe, popular: addVoteP ,img : Img4}]));
+              setClickState(!clickState)
+              setAddVoteId("")
+              setAddVoteDe("")
+              setAddVoteP("")
+          }
+      }
+  }
 
   return (
     <div className="App">
@@ -178,7 +180,7 @@ const click =() => {
         <div className='form-input-box'>
             <input placeholder='id' value={addVoteId} onChange={(e)=>setAddVoteId(e.target.value) }/>
             <input placeholder='description' value={addVoteDe} onChange={(e)=>setAddVoteDe(e.target.value)} />
-            <input placeholder='popular'  value={addVoteP} onChange={(e) => setAddVoteP(e.target.value)} />
+            <input type='numver' placeholder='후보'  value={addVoteP} onChange={(e) => setAddVoteP(e.target.value)} />
         </div>
         }
         <button onClick={()=>click()}>{!clickState ? "등록하기" : "추가하기"}</button>
