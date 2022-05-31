@@ -49,6 +49,7 @@ const Vote = () => {
       >
         
           <div key={`inline-radio`} className="mb-3">
+            <div>
             <Form.Check
               inline
               label="서기영"
@@ -76,8 +77,8 @@ const Vote = () => {
               id={`inline-radio-3`}
               onChange={changeHandler}
             />
+            </div>
           </div>
-        
         <button type='submit'>제출</button>
       </Form>
       <button onClick={onClick}>메타마스크 연결</button>
