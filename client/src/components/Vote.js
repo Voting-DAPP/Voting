@@ -116,7 +116,7 @@ const click =() => {
             // array = [1,2], array1 = [2,3,4]
             // [1,2,2,3,4];
             // 배열과 배열을 함칠때 
-            setVoteValue(vote.concat([{id: addVoteId, description: addVoteDe, popular: addVoteP ,img : Img4}]));
+            setVoteValue(voteValue.concat([{id: addVoteId, description: addVoteDe, popular: addVoteP ,img : Img4}]));
             setClickState(!clickState)
             setAddVoteId("")
             setAddVoteDe("")
