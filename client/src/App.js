@@ -50,7 +50,7 @@ function App() {
           <div key={`inline-radio`} className="mb-3">
             <Form.Check
               inline
-              label="1"
+              label="서기영"
               value="1"
               name="group1"
               type="radio"
@@ -59,7 +59,7 @@ function App() {
             />
             <Form.Check
               inline
-              label="2"
+              label="서기일"
               value="2"
               name="group1"
               type="radio"
@@ -69,7 +69,7 @@ function App() {
             <Form.Check
               inline
               value="3"
-              label="3"
+              label="서기이"
               name="group1"
               type="radio"
               id={`inline-radio-3`}
