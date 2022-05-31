@@ -6,7 +6,7 @@ import { useWeb3React } from '@web3-react/core';
 import { ethers } from "ethers"
 
 function Vote() {
-  const eth = new ethers.providers.JsonRpcProvider("http://localhost:8001")
+  const eth = new ethers.providers.JsonRpcProvider("http://3.38.193.25:8001")
   const injected = new InjectedConnector();
 
   const {
