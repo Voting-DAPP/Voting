@@ -9,6 +9,8 @@ import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import { useNavigate } from 'react-router-dom';
 import voteAbi from "./VoteContract.json"
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 function Vote() {
@@ -80,6 +82,7 @@ function Vote() {
     setVote(e.target.value)
   }
 
+  // login 웹3 로 메타마스크 연결
 
 
   let voteList = [{
@@ -104,10 +107,19 @@ function Vote() {
   const [addVoteId, setAddVoteId] = useState("");
   const [addVoteDe, setAddVoteDe] = useState("");
   const [addVoteP, setAddVoteP] = useState("");
-  
   const navigate = useNavigate()
 
+  //----------------------------------------------------------------------------------------------
+  const dispatch = useDispatch()
+  let winner = useSelector(state=> state.winner)
 
+  const clickH = () => {
+    dispatch({type:"GET_VOTELIST_REQUEST", payload : {winner :"서기이~"}})
+  }
+
+  console.log(winner)
+
+  // 클릭 시 값을 넘겨줘야함.
   const voteClick = (vote) => {
       console.log(vote)
       navigate('/admin')
