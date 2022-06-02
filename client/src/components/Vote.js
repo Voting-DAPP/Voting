@@ -1,5 +1,5 @@
 import { Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios"
 import { InjectedConnector } from '@web3-react/injected-connector';
 import { useWeb3React } from '@web3-react/core';
@@ -8,14 +8,18 @@ import {Img1, Img2, Img3, Img4, Img5, Img6} from './img'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import { useNavigate } from 'react-router-dom';
-
-
+import voteAbi from "./VoteContract.json"
 
 
 function Vote() {
-  const eth = new ethers.providers.JsonRpcProvider("http://localhost:8001")
+
+  
+  
+  const eth = new ethers.providers.Web3Provider(window.ethereum)
+
   const injected = new InjectedConnector();
 
+  console.log(voteAbi.abi)
   const {
     chainId,
     account,
@@ -37,11 +41,35 @@ function Vote() {
         window.open('https://metamask.io/download.html');
       }
     });
+
+    const callApi = async () => {
+      
+    }
   }
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    await eth.send("eth_requestAccounts", []);
+    
+    const signer = eth.getSigner();
+
+    const signAddress = await signer.getAddress()
     console.log(eth.blockNumber)
+    console.log(signAddress)
+    // const tx = signer.sendTransaction({
+    //   to: "0xC60B2D429908765bc5183AA6f88b35Ff39311ffa",
+    //   value: ethers.utils.parseEther("1.0")
+    // });
+    
+    const voteaddress = "0xb8f41b53455ae226c03543320a59bab227f0e708";
+    const voteContract = new ethers.Contract(voteaddress,voteAbi.abi,eth);
+    const response = await voteContract.checkCandidiates()
+    console.log(response)
+    const voteSigner = voteContract.connect(signer);
+    const dai = ethers.utils.parseUnits("0.01", 18);
+    let result = await voteSigner.runningForCandidates({from : signAddress, value: dai})
+    console.log(result)
     console.log((await eth.getBalance("0x9f1c6b2f78D504107c496aF83E5f2f2140e7b5d3")).toString())
     // const {data} = await axios.post("http://localhost:3500/vote",{vote})
     // console.log(data)
@@ -183,7 +211,7 @@ function Vote() {
             <input type='numver' placeholder='후보'  value={addVoteP} onChange={(e) => setAddVoteP(e.target.value)} />
         </div>
         }
-        <button onClick={()=>click()}>{!clickState ? "등록하기" : "추가하기"}</button>
+        <button onClick={click}>{!clickState ? "등록하기" : "추가하기"}</button>
         </div>
     </div>
 
